@@ -1,0 +1,26 @@
+# Ignore dependencies
+node_modules/
+
+# Ignore build artifacts
+dist/
+build/
+out/
+
+# Ignore environment variables
+.env
+.env.local
+
+# Ignore logs
+*.log
+logs/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore npm debug logs
+npm-debug.log*
