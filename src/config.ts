@@ -4,6 +4,10 @@ const config = {
   DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
   DISCORD_GUILD_ID: process.env.DISCORD_GUILD_ID,
+
+  FACEIT_CLIENT_ID: process.env.FACEIT_CLIENT_ID,
+  FACEIT_CLIENT_SECRET: process.env.FACEIT_CLIENT_SECRET,
+  FACEIT_REDIRECT_URI: process.env.FACEIT_REDIRECT_URI,
 };
 
 export default config;
