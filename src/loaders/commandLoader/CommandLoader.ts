@@ -29,7 +29,13 @@ export default class CommandLoader {
       }
 
       if (file.split('/').pop()?.split('.')[2]) {
-        return this.client.subCommands.set(command.name, command);
+        const parts = file.split('/').pop()?.split('.');
+        const parentCommand = parts ? parts[0].toLowerCase() : '';
+        const subCommand = command.name;
+        return this.client.subCommands.set(
+          `${parentCommand}.${subCommand}`,
+          command
+        );
       } else {
         this.client.commands.set(command.name, command as Command);
       }
