@@ -3,10 +3,12 @@ import {
   Interaction,
   Collection,
   Events,
+  ButtonInteraction,
 } from 'discord.js';
 import CustomClient from '../client/CustomClient';
 import Command from '../loaders/commandLoader/Command';
 import Event from '../loaders/eventLoader/Event';
+import config from '../config';
 
 export default class InteractionCreate extends Event {
   constructor(client: CustomClient) {
@@ -20,6 +22,9 @@ export default class InteractionCreate extends Event {
   async Execute(interaction: Interaction) {
     if (interaction.isChatInputCommand()) {
       await this.handleCommand(interaction);
+    }
+    if (interaction.isButton()) {
+      await this.handleButton(interaction);
     }
   }
 
@@ -70,6 +75,15 @@ export default class InteractionCreate extends Event {
       );
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  private async handleButton(interaction: ButtonInteraction) {
+    if (interaction.customId === 'verify-button') {
+      return interaction.reply({
+        content: `Please click this link to verify your account: ${config.AUTH_URI}`,
+        ephemeral: true,
+      });
     }
   }
 }

@@ -8,6 +8,9 @@ const config = {
   FACEIT_CLIENT_ID: process.env.FACEIT_CLIENT_ID,
   FACEIT_CLIENT_SECRET: process.env.FACEIT_CLIENT_SECRET,
   FACEIT_REDIRECT_URI: process.env.FACEIT_REDIRECT_URI,
+
+  BASE_URI: process.env.BASE_URI,
+  AUTH_URI: process.env.AUTH_URI,
 };
 
 export default config;
