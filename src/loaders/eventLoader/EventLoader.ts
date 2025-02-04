@@ -14,7 +14,7 @@ export default class EventLoader {
       path.resolve(filePath)
     );
 
-    files.map(async (file: string) => {
+    files.forEach(async (file: string) => {
       const event: Event = new (await import(file)).default(this.client);
 
       if (!event.name) {

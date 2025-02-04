@@ -1,13 +1,14 @@
 import { ChatInputCommandInteraction, PermissionsBitField } from 'discord.js';
 import CustomClient from '../client/CustomClient';
 import Command from '../loaders/commandLoader/Command';
+import { CommandCategory } from '../enums/CommandCategory';
 
 export default class Ping extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: 'ping',
       description: 'Pong!',
-      category: 'Test command',
+      category: CommandCategory.INFO,
       default_member_permissions:
         PermissionsBitField.Flags.UseApplicationCommands,
       options: [],
@@ -16,7 +17,7 @@ export default class Ping extends Command {
     });
   }
 
-  Execute(interation: ChatInputCommandInteraction): void {
-    interation.reply({ content: 'Pong!' });
+  Execute(interaction: ChatInputCommandInteraction): void {
+    interaction.reply({ content: 'Pong!' });
   }
 }

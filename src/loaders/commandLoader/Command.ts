@@ -5,12 +5,13 @@ import {
 import ICommand from './ICommand';
 import CustomClient from '../../client/CustomClient';
 import ICommandOptions from './ICommandOptions';
+import { CommandCategory } from '../../enums/CommandCategory';
 
 export default class Command implements ICommand {
   client: CustomClient;
   name: string;
   description: string;
-  category: string; // TODO: Make this an enum
+  category: CommandCategory;
   options: object;
   default_member_permissions: bigint;
   dm_permissions: boolean;

@@ -1,13 +1,14 @@
 import { PermissionsBitField, ChatInputCommandInteraction } from 'discord.js';
 import Command from '../loaders/commandLoader/Command';
 import CustomClient from '../client/CustomClient';
+import { CommandCategory } from '../enums/CommandCategory';
 
 export default class Create extends Command {
   constructor(client: CustomClient) {
     super(client, {
       name: 'create',
       description: 'Creates embeds',
-      category: 'Admin',
+      category: CommandCategory.ADMIN,
       default_member_permissions:
         PermissionsBitField.Flags.UseApplicationCommands,
       options: [

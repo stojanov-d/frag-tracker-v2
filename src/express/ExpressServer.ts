@@ -8,10 +8,8 @@ import config from '../config';
 
 export default class ExpressServer {
   private app: Application;
-  private client: CustomClient;
 
   constructor(client: CustomClient) {
-    this.client = client;
     this.app = express();
     this.app.use(cors());
     this.app.use(express.json());

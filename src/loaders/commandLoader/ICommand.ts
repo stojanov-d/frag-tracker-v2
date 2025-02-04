@@ -3,12 +3,13 @@ import {
   ChatInputCommandInteraction,
 } from 'discord.js';
 import CustomClient from '../../client/CustomClient';
+import { CommandCategory } from '../../enums/CommandCategory';
 
 export default interface ICommand {
   client: CustomClient;
   name: string;
   description: string;
-  category: string; // TODO: Make this an enum
+  category: CommandCategory;
   options: object;
   default_member_permissions: bigint;
   dm_permissions: boolean;

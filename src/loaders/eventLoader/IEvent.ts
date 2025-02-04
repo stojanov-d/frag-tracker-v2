@@ -4,6 +4,6 @@ import CustomClient from '../../client/CustomClient';
 export default interface IEvent {
   client: CustomClient;
   name: Events;
-  desciption: string;
+  description: string;
   once: boolean;
 }

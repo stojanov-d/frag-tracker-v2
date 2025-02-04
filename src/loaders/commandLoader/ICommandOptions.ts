@@ -1,7 +1,9 @@
+import { CommandCategory } from '../../enums/CommandCategory';
+
 export default interface ICommandOptions {
   name: string;
   description: string;
-  category: string; // TODO: Make this an enum
+  category: CommandCategory;
   options: object;
   default_member_permissions: bigint;
   dm_permissions: boolean;

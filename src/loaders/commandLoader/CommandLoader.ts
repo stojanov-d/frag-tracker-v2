@@ -16,7 +16,7 @@ export default class CommandLoader {
       path.resolve(filePath)
     );
 
-    files.map(async (file: string) => {
+    files.forEach(async (file: string) => {
       const command: Command | SubCommand = new (await import(file)).default(
         this.client
       );
