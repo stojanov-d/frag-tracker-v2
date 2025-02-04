@@ -27,9 +27,11 @@ export default class ExpressServer {
     this.app.use(new Routes().router);
   }
 
-  public start(port: number): void {
-    this.app.listen(port, () => {
-      console.log(`[Express] Server running on port ${port}`);
+  public start(port: number): Promise<any> {
+    return new Promise((resolve) => {
+      const server = this.app.listen(port, () => {
+        resolve(server);
+      });
     });
   }
 }

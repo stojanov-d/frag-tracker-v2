@@ -14,8 +14,6 @@ export default class Ready extends Event {
   }
 
   async Execute() {
-    console.log(`${this.client.user?.tag} is online!`);
-
     const commands: object[] = this.GetJson(this.client.commands);
 
     const rest = new REST().setToken(config.DISCORD_BOT_TOKEN!);
@@ -30,7 +28,9 @@ export default class Ready extends Event {
       }
     )) as { id: string; name: string }[];
 
-    console.log(`Successfully registered ${setCommands.length} commands!`);
+    console.log(
+      `[BOT] Successfully registered ${setCommands.length} commands!`
+    );
   }
 
   private GetJson(commands: Collection<string, Command>) {

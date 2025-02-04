@@ -1,4 +1,26 @@
 import 'dotenv/config';
+
+export function validateConfig() {
+  const requiredEnvVars = [
+    'DISCORD_BOT_TOKEN',
+    'DISCORD_CLIENT_ID',
+    'DISCORD_CLIENT_SECRET',
+    'DISCORD_GUILD_ID',
+    'FACEIT_CLIENT_ID',
+    'FACEIT_CLIENT_SECRET',
+    'FACEIT_REDIRECT_URI',
+    'BASE_URI',
+    'AUTH_URI',
+    'SESSION_SECRET_KEY',
+    'EXPRESS_PORT',
+  ];
+
+  for (let envVar of requiredEnvVars) {
+    if (!process.env[envVar]) {
+      throw new Error(`Missing required environment variable: ${envVar}`);
+    }
+  }
+}
 const config = {
   DISCORD_BOT_TOKEN: process.env.DISCORD_BOT_TOKEN,
   DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
@@ -12,6 +34,7 @@ const config = {
   BASE_URI: process.env.BASE_URI,
   AUTH_URI: process.env.AUTH_URI,
   SESSION_SECRET_KEY: process.env.SESSION_SECRET_KEY,
+  EXPRESS_PORT: process.env.EXPRESS_PORT,
 };
 
 export default config;
