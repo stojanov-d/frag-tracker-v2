@@ -1,4 +1,4 @@
-import { PermissionsBitField, ChatInputCommandInteraction } from 'discord.js';
+import { PermissionsBitField } from 'discord.js';
 import Command from '../loaders/commandLoader/Command';
 import CustomClient from '../client/CustomClient';
 import { CommandCategory } from '../enums/CommandCategory';
@@ -22,6 +22,4 @@ export default class Create extends Command {
       cooldown: 0,
     });
   }
-
-  Execute(interaction: ChatInputCommandInteraction): void {}
 }

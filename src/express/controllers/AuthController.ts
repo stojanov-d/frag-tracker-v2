@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import config from '../../config';
-import { Client, GuildMember, TextChannel, UserResolvable } from 'discord.js';
+import { TextChannel, UserResolvable } from 'discord.js';
 import CustomClient from '../../client/CustomClient';
 
 export class AuthController {
@@ -90,7 +90,7 @@ export class AuthController {
         res.send('Authentication failed');
       }
     } catch (error) {
-      res.send('Error during verification');
+      res.send(`Error during verification:${error}`);
     }
   }
 }

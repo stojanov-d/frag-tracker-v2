@@ -5,6 +5,7 @@ import Routes from './routes/Routes';
 import { AuthController } from './controllers/AuthController';
 import CustomClient from '../client/CustomClient';
 import config from '../config';
+import { Server } from 'http';
 
 export default class ExpressServer {
   private app: Application;
@@ -25,7 +26,7 @@ export default class ExpressServer {
     this.app.use(new Routes().router);
   }
 
-  public start(port: number): Promise<any> {
+  public start(port: number): Promise<Server> {
     return new Promise((resolve) => {
       const server = this.app.listen(port, () => {
         resolve(server);
