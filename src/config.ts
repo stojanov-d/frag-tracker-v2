@@ -11,6 +11,7 @@ const config = {
 
   BASE_URI: process.env.BASE_URI,
   AUTH_URI: process.env.AUTH_URI,
+  SESSION_SECRET_KEY: process.env.SESSION_SECRET_KEY,
 };
 
 export default config;

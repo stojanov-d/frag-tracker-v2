@@ -81,7 +81,7 @@ export default class InteractionCreate extends Event {
   private async handleButton(interaction: ButtonInteraction) {
     if (interaction.customId === 'verify-button') {
       return interaction.reply({
-        content: `Please click this link to verify your account: ${config.AUTH_URI}`,
+        content: `Please click this link to verify your account: ${config.AUTH_URI}?discordId=${interaction.user.id}`,
         ephemeral: true,
       });
     }

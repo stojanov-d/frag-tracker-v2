@@ -7,6 +7,7 @@ declare module 'express-session' {
     codeVerifier: string;
     codeChallenge: string;
     accessToken: string;
+    discordId: string;
   }
 }
 
@@ -20,6 +21,7 @@ export const pkceMiddleware = (
 
   req.session.codeVerifier = verifier;
   req.session.codeChallenge = challenge;
+  req.session.discordId = req.query.discordId as string;
 
   next();
 };
