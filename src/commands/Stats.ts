@@ -9,7 +9,7 @@ import CustomClient from '../client/CustomClient';
 import { CommandCategory } from '../enums/CommandCategory';
 import Command from '../loaders/commandLoader/Command';
 import config from '../config';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 export interface PlayerData {
   player_id: string;
@@ -36,73 +36,74 @@ export interface MatchStats {
 
 async function fetchAggregatedMatchStats(
   playerId: string,
-  START_TIMESTAMP: number,
-  END_TIMESTAMP: number
+  startTimestamp: number,
+  overallEndTime: number
 ): Promise<MatchStats[]> {
-  const aggregatedMatchStats: MatchStats[] = [];
-  let currentStart = new Date(START_TIMESTAMP);
+  const monthIntervals: { start: Date; end: Date }[] = [];
+  let currentStart = new Date(startTimestamp);
 
-  while (currentStart.getTime() < END_TIMESTAMP) {
+  while (currentStart.getTime() < overallEndTime) {
     let currentEnd = new Date(currentStart);
     currentEnd.setMonth(currentEnd.getMonth() + 1);
-    if (currentEnd.getTime() > END_TIMESTAMP) {
-      currentEnd = new Date(END_TIMESTAMP);
+    if (currentEnd.getTime() > overallEndTime) {
+      currentEnd = new Date(overallEndTime);
     }
+    monthIntervals.push({
+      start: new Date(currentStart),
+      end: new Date(currentEnd),
+    });
+    currentStart = currentEnd;
+  }
 
-    console.log(
-      'Fetching data from:',
-      currentStart.toISOString(),
-      'to:',
-      currentEnd.toISOString()
-    );
-
+  const monthlyPromises = monthIntervals.map(async ({ start, end }) => {
     let offset = 0;
     const limit = 100;
+    const monthlyStats: MatchStats[] = [];
     while (true) {
       const url = `https://open.faceit.com/data/v4/players/${playerId}/games/cs2/stats`;
       const params = {
-        from: currentStart.getTime(),
-        to: currentEnd.getTime(),
-        limit: limit,
-        offset: offset,
+        from: start.getTime(),
+        to: end.getTime(),
+        limit,
+        offset,
       };
       const headers = {
         Authorization: `Bearer ${config.FACEIT_API_KEY}`,
       };
 
       try {
-        const statsResponse: AxiosResponse<{ items: MatchStats[] }> =
-          await axios.get(url, {
-            params,
-            headers,
-          });
-        console.log('Full stats data object:', statsResponse.data);
-
-        const matchStats = statsResponse.data.items;
+        const response = await axios.get<{ items: MatchStats[] }>(url, {
+          params,
+          headers,
+        });
+        console.log(
+          'Chunk data from',
+          start.toISOString(),
+          'to',
+          end.toISOString(),
+          response.data
+        );
+        const matchStats = response.data.items;
         if (!matchStats || matchStats.length === 0) {
           break;
         }
-        aggregatedMatchStats.push(...matchStats);
+        monthlyStats.push(...matchStats);
         offset += limit;
         if (matchStats.length < limit) {
           break;
         }
       } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-          console.error('Axios Error:', error.message);
-          if (error.response) {
-            console.error('Response Data:', error.response.data);
-            console.error('Response Status:', error.response.status);
-          }
-        } else {
-          console.error('Unexpected Error:', error);
-        }
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+        console.error('Error fetching month chunk:', errorMessage);
         break;
       }
     }
-    currentStart = currentEnd;
-  }
+    return monthlyStats;
+  });
 
+  const monthlyResults = await Promise.all(monthlyPromises);
+  const aggregatedMatchStats = monthlyResults.flat();
   console.log('Aggregated Match Stats Count:', aggregatedMatchStats.length);
   return aggregatedMatchStats;
 }
@@ -216,7 +217,7 @@ export default class Stats extends Command {
       const mostPlayedMaps = getMostPlayedMaps(aggregatedMatchStats);
 
       const embed = new EmbedBuilder()
-        .setTitle(`Faceit stats for ${nickname}`)
+        .setTitle(`Faceit stats - ${nickname}`)
         .setColor('Orange')
         .addFields(
           {
@@ -252,7 +253,7 @@ export default class Stats extends Command {
             inline: true,
           },
           {
-            name: 'Aggregated K/D Ratio',
+            name: 'K/D Ratio',
             value:
               aggregatedCounts['K/D Ratio'] !== undefined
                 ? aggregatedCounts['K/D Ratio'].toFixed(2)
