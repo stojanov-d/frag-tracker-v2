@@ -8,6 +8,7 @@ export function validateConfig() {
     'DISCORD_GUILD_ID',
     'FACEIT_CLIENT_ID',
     'FACEIT_CLIENT_SECRET',
+    'FACEIT_API_KEY',
     'FACEIT_REDIRECT_URI',
     'BASE_URI',
     'AUTH_URI',
@@ -29,6 +30,7 @@ const config = {
 
   FACEIT_CLIENT_ID: process.env.FACEIT_CLIENT_ID,
   FACEIT_CLIENT_SECRET: process.env.FACEIT_CLIENT_SECRET,
+  FACEIT_API_KEY: process.env.FACEIT_API_KEY,
   FACEIT_REDIRECT_URI: process.env.FACEIT_REDIRECT_URI,
 
   BASE_URI: process.env.BASE_URI,
