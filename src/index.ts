@@ -1,12 +1,16 @@
 import CustomClient from './client/CustomClient';
 import ExpressServer from './express/ExpressServer';
 import config, { validateConfig } from './config';
+import { sequelize } from './db';
 
 const PORT = parseInt(config.EXPRESS_PORT!);
 
 async function startServer() {
   try {
     validateConfig();
+
+    await sequelize.sync();
+    console.log('✅ Database synchronized');
 
     const client = new CustomClient();
     await client.Init();
