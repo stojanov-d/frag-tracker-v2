@@ -1,6 +1,3 @@
-# docker-compose.yaml
-version: '3.9'
-
 services:
   frag-tracker-app:
     container_name: frag-tracker-app

@@ -1,5 +1,4 @@
 # Dockerfile
-
 FROM node:20-alpine AS builder
 
 # Set working directory
@@ -30,9 +29,6 @@ RUN npm install --omit=dev
 # Copy built files from builder stage
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
-
-# Copy .env file
-COPY .env ./.env
 
 # Expose the port the app runs on
 EXPOSE 3000
