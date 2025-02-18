@@ -2,6 +2,8 @@ import CustomClient from './client/CustomClient';
 import ExpressServer from './express/ExpressServer';
 import config, { validateConfig } from './config';
 import { sequelize } from './db';
+import './models/Match';
+import './models/Player';
 
 const PORT = parseInt(config.EXPRESS_PORT!);
 
